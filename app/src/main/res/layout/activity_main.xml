@@ -1,32 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="25dp">
+    android:background="@drawable/background_sun">
 
     <RelativeLayout
         android:id="@+id/mainContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
         android:visibility="visible">
+
+
         <LinearLayout
             android:id="@+id/addressContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
-            <TextView android:id="@+id/address"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:text="City, Country"/>
+                android:layout_marginTop="400px"
+                android:text="City, Country"
+                android:textColor="#FCF9F9"
+                android:textSize="24dp" />
+
             <TextView
                 android:id="@+id/updated_at"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:text="00 Month 0000, 00:00 "/>
+                android:text="00 Month 0000, 00:00 "
+                android:textColor="#FCF9F9"
+                android:textSize="14dp" />
+
+
         </LinearLayout>
 
 
@@ -34,27 +49,41 @@
             android:id="@+id/overviewContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_centerInParent="true">
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:layout_gravity="center"
-                android:text="Clear Sky"/>
             <TextView
                 android:id="@+id/temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="90dp"
-                android:fontFamily="sans-serif-thin"
                 android:layout_gravity="center"
-                android:text="00°C"/>
+                android:text="00°C"
+                android:textColor="#FCF9F9"
+                android:textSize="50dp" />
 
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="600px"
+            android:layout_alignParentBottom="true"
+            android:background="#FFFFFF"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12h"
+                android:textColor="#000000"
+                android:textSize="30dp"
+                android:layout_marginTop="100px"
+                android:layout_marginLeft="150px"
+
+
+                />
+        </LinearLayout>
+
+
     </RelativeLayout>
 
 

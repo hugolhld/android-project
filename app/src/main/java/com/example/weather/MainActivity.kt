@@ -58,13 +58,11 @@ class MainActivity : AppCompatActivity() {
                 val updatedAtText = "Updated at: "+ SimpleDateFormat("dd/MM/yyyy hh:mm ", Locale.FRANCE).format(Date(updatedAt*1000))
                 val temp = main.getString("temp")+"°C"
 
-                val weatherDescription = weather.getString("description")
 
                 val address = jsonObj.getString("name")+", "+sys.getString("country")
 
                 findViewById<TextView>(R.id.address).text = address
                 findViewById<TextView>(R.id.updated_at).text =  updatedAtText
-                findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
                 findViewById<TextView>(R.id.temp).text = temp
 
 
