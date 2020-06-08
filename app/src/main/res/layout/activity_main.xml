@@ -1,91 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_sun">
+    android:background="@drawable/background_sun"
+    >
 
-    <RelativeLayout
-        android:id="@+id/mainContainer"
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+
+
+</LinearLayout>
+    <EditText
+        android:id="@+id/search_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="15"
+        android:inputType="textPostalAddress"
+        android:text="City"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></EditText>
+
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="City, Country"
+        android:textColor="#FCF9F9"
+        android:textSize="24dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/updated_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00 Month 0000, 00:00 "
+        android:textColor="#FCF9F9"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address" />
+
+    <TextView
+        android:id="@+id/temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="00°C"
+        android:textColor="#FCF9F9"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updated_at" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="25dp"
-        android:visibility="visible">
+        android:layout_height="600px"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-
-        <LinearLayout
-            android:id="@+id/addressContainer"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:text="12h"
+            android:textColor="#000000"
+            android:textSize="30dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="50dp"
 
+            />
 
-            <TextView
-                android:id="@+id/address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="400px"
-                android:text="City, Country"
-                android:textColor="#FCF9F9"
-                android:textSize="24dp" />
-
-            <TextView
-                android:id="@+id/updated_at"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00 Month 0000, 00:00 "
-                android:textColor="#FCF9F9"
-                android:textSize="14dp" />
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/overviewContainer"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:text="13h"
+            android:textColor="#000000"
+            android:textSize="30dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
 
-            <TextView
-                android:id="@+id/temp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="00°C"
-                android:textColor="#FCF9F9"
-                android:textSize="50dp" />
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14h"
+            android:textColor="#000000"
+            android:textSize="30dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
 
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15h"
+            android:textColor="#000000"
+            android:textSize="30dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="600px"
-            android:layout_alignParentBottom="true"
-            android:background="#FFFFFF"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12h"
-                android:textColor="#000000"
-                android:textSize="30dp"
-                android:layout_marginTop="100px"
-                android:layout_marginLeft="150px"
-
-
-                />
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
+            />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/loader"
@@ -94,4 +122,5 @@
         android:layout_centerInParent="true"
         android:visibility="gone"/>
 
-</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

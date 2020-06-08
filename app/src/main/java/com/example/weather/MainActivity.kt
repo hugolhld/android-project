@@ -7,6 +7,7 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 import java.net.URL
 import java.text.SimpleDateFormat
@@ -14,24 +15,20 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    val CITY: String = "Paris,Fr"
     val API: String = "167d58d024f7bab696b3bb1dea0260ca"
+    val CITY: String = "Paris"
+    /*val content: String = search_city.getText().toString()*/
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         weatherTask().execute()
 
     }
 
     inner class weatherTask() : AsyncTask<String, Void, String>() {
-        override fun onPreExecute() {
-            super.onPreExecute()
-            /* Showing the ProgressBar, Making the main design GONE */
-            findViewById<ProgressBar>(R.id.loader).visibility = View.VISIBLE
-            findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.GONE
-        }
 
         override fun doInBackground(vararg params: String?): String? {
             var response:String?
@@ -55,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 val weather = jsonObj.getJSONArray("weather").getJSONObject(0)
 
                 val updatedAt:Long = jsonObj.getLong("dt")
-                val updatedAtText = "Updated at: "+ SimpleDateFormat("dd/MM/yyyy hh:mm ", Locale.FRANCE).format(Date(updatedAt*1000))
+                val updatedAtText = "Updated at: "+ SimpleDateFormat("dd/MM/yyyy HH:mm ", Locale.FRANCE).format(Date(updatedAt*1000))
                 val temp = main.getString("temp")+"°C"
 
 
@@ -68,6 +65,8 @@ class MainActivity : AppCompatActivity() {
 
                 findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
                 findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.VISIBLE
+
+
 
             } catch (e: Exception) {
                 findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
