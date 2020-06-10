@@ -50,10 +50,13 @@ class MainActivity : AppCompatActivity() {
                 val main = jsonObj.getJSONObject("main")
                 val sys = jsonObj.getJSONObject("sys")
                 val weather = jsonObj.getJSONArray("weather").getJSONObject(0)
+                val weatherDescription = weather.getString("description")
+
 
                 val updatedAt:Long = jsonObj.getLong("dt")
                 val updatedAtText = "Updated at: "+ SimpleDateFormat("dd/MM/yyyy HH:mm ", Locale.FRANCE).format(Date(updatedAt*1000))
                 val temp = main.getString("temp")+"°C"
+
 
 
                 val address = jsonObj.getString("name")+", "+sys.getString("country")
@@ -61,10 +64,11 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.address).text = address
                 findViewById<TextView>(R.id.updated_at).text =  updatedAtText
                 findViewById<TextView>(R.id.temp).text = temp
+                findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
+
 
 
                 findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
-                findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.VISIBLE
 
 
 
