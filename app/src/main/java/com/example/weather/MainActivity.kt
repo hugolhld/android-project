@@ -4,18 +4,20 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.androdocs.weatherapp.R.*
-import com.androdocs.weatherapp.R.id.*
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.androdocs.weatherapp.R.id
+import com.androdocs.weatherapp.R.layout
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,6 +50,27 @@ class MainActivity : AppCompatActivity() {
             weatherTask().execute()
             weatherHourly().execute()
 
+        }
+
+
+        button_view.setOnClickListener {
+
+            val params: ViewGroup.LayoutParams = linearLayout2.layoutParams
+
+             if ( params.height == 600) {
+                 params.height = 1000
+                 linearLayout2.layoutParams = params
+                 findViewById<ImageView>(id.linearLayout3).visibility = View.GONE
+
+             }
+
+            else if (params.height == 1000){
+
+                params.height = 600
+                linearLayout2.layoutParams = params
+                 findViewById<ImageView>(id.linearLayout3).visibility = View.VISIBLE
+
+            }
         }
 
     }
