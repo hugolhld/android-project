@@ -23,11 +23,21 @@
         android:layout_height="wrap_content"
         android:ems="15"
         android:inputType="textPostalAddress"
-        android:text="City"
+        android:hint="City"
         android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></EditText>
+
+    <Button
+        android:id="@+id/button_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/search_city"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Search"/>
+
 
 
     <TextView
@@ -66,54 +76,118 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updated_at" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="600px"
         android:background="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/first_linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12h"
-            android:textColor="#000000"
-            android:textSize="30dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/second_linear">
 
-            />
+            <TextView
+                android:id="@+id/first_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12h"
+                android:textColor="#000000"
+                android:textSize="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="50dp"/>
 
-        <TextView
+            <TextView
+                android:id="@+id/second_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="13h"
+                android:textColor="#000000"
+                android:textSize="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"/>
+<!--                app:layout_constraintLeft_toRightOf="@+id/first_hour"-->
+
+            <TextView
+                android:id="@+id/third_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14h"
+                android:textColor="#000000"
+                android:textSize="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"/>
+<!--                app:layout_constraintLeft_toRightOf="@+id/second_hour"-->
+
+            <TextView
+                android:id="@+id/four_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15h"
+                android:textColor="#000000"
+                android:textSize="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/second_linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="13h"
-            android:textColor="#000000"
-            android:textSize="30dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/first_linear">
 
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="14h"
-            android:textColor="#000000"
-            android:textSize="30dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="50dp"
+            <TextView
+                android:id="@+id/first_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12h"
+                android:textColor="#000000"
+                android:textSize="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="50dp" />
 
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="15h"
-            android:textColor="#000000"
-            android:textSize="30dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="50dp"
+            <TextView
+                android:id="@+id/second_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12h"
+                android:textColor="#000000"
+                android:textSize="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp" />
 
-            />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/third_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12h"
+                android:textColor="#000000"
+                android:textSize="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp" />
+
+            <TextView
+                android:id="@+id/four_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12h"
+                android:textColor="#000000"
+                android:textSize="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar
         android:id="@+id/loader"
