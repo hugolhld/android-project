@@ -138,10 +138,13 @@ class MainActivity : AppCompatActivity() {
                 lon = coord.getString("lon")
                 lat = coord.getString("lat")
                 val weather = jsonObj.getJSONArray("weather").getJSONObject(0)
+                val weatherDescription = weather.getString("description")
+                val icon = weather.getString("main")
+
 
                 val updatedAt:Long = jsonObj.getLong("dt")
                 val updatedAtText = "Updated at: "+ SimpleDateFormat("dd/MM/yyyy HH:mm ", Locale.FRANCE).format(Date(updatedAt*1000))
-                val temp = main.getString("temp")+"°C"
+                val temp = main.getString("temp").toDouble().toInt().toString() +"°C"
 
 
                 val address = jsonObj.getString("name")+", "+sys.getString("country")
@@ -149,12 +152,36 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(id.address).text = address
                 findViewById<TextView>(id.updated_at).text =  updatedAtText
                 findViewById<TextView>(id.temp).text = temp
+                findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
+
+                if (icon.equals("Rain")){
+                    linearLayout3.setBackgroundResource(R.drawable.rain);
+                    background_layout.setBackgroundResource(R.drawable.background_rain)
+                }
+                else if (icon.equals("Thunderstorm")){
+                    linearLayout3.setBackgroundResource(R.drawable.thunderstorm);
+                    background_layout.setBackgroundResource(R.drawable.background_light)
+
+                }
+                else if (icon.equals("Drizzle")){
+                    linearLayout3.setBackgroundResource(R.drawable.shower_rain);
+                    background_layout.setBackgroundResource(R.drawable.background_rain)
+
+                }
+                else if (icon.equals("Snow")){
+                    linearLayout3.setBackgroundResource(R.drawable.snow)
+                    background_layout.setBackgroundResource(R.drawable.background_snow)
+                }
+                else if (icon.equals("Clear")){
+                    linearLayout3.setBackgroundResource(R.drawable.clearsky);
+                    background_layout.setBackgroundResource(R.drawable.background_sun)
+                }
+                else if (icon.equals("Clouds")){
+                    linearLayout3.setBackgroundResource(R.drawable.brokencloud);
+                    background_layout.setBackgroundResource(R.drawable.background_cloud)
+                }
 
                 findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
-                findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.VISIBLE
-
-                findViewById<ProgressBar>(id.loader).visibility = View.GONE
-                //findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.VISIBLE
 
             } catch (e: Exception) {
                 findViewById<ProgressBar>(id.loader).visibility = View.GONE
