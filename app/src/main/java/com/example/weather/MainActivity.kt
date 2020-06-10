@@ -1,6 +1,5 @@
 package com.androdocs.weatherapp
 
-import android.annotation.SuppressLint
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +16,6 @@ import org.json.JSONObject
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.round
 
 class MainActivity : AppCompatActivity() {
 
@@ -152,6 +150,8 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(id.updated_at).text =  updatedAtText
                 findViewById<TextView>(id.temp).text = temp
 
+                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
+                findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.VISIBLE
 
                 findViewById<ProgressBar>(id.loader).visibility = View.GONE
                 //findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.VISIBLE
@@ -161,6 +161,5 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-
     }
 }
