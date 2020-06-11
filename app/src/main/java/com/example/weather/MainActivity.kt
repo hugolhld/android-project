@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.androdocs.weatherapp.R.id
 import com.androdocs.weatherapp.R.layout
 import kotlinx.android.synthetic.main.activity_main.*
@@ -55,16 +55,19 @@ class MainActivity : AppCompatActivity() {
 
         button_view.setOnClickListener {
 
+
+
             val params: ViewGroup.LayoutParams = linearLayout2.layoutParams
 
              if ( params.height == 600) {
-                 params.height = 1000
+
+                 params.height = 1400
                  linearLayout2.layoutParams = params
                  findViewById<ImageView>(id.linearLayout3).visibility = View.GONE
 
              }
 
-            else if (params.height == 1000){
+            else if (params.height == 1400){
 
                 params.height = 600
                 linearLayout2.layoutParams = params
@@ -163,11 +166,19 @@ class MainActivity : AppCompatActivity() {
                 val weather = jsonObj.getJSONArray("weather").getJSONObject(0)
                 val weatherDescription = weather.getString("description")
                 val icon = weather.getString("main")
+                val wind = jsonObj.getJSONObject("wind")
+                val pressure = main.getString("pressure")
+                val humidity = main.getString("humidity")
+
+
+                val windSpeed = wind.getString("speed")
 
 
                 val updatedAt:Long = jsonObj.getLong("dt")
                 val updatedAtText = "Updated at: "+ SimpleDateFormat("dd/MM/yyyy HH:mm ", Locale.FRANCE).format(Date(updatedAt*1000))
                 val temp = main.getString("temp").toDouble().toInt().toString() +"°C"
+                val tempMin =  main.getString("temp_min")+"°C"
+                val tempMax =  main.getString("temp_max")+"°C"
 
 
                 val address = jsonObj.getString("name")+", "+sys.getString("country")
@@ -175,6 +186,12 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(id.address).text = address
                 findViewById<TextView>(id.updated_at).text =  updatedAtText
                 findViewById<TextView>(id.temp).text = temp
+                findViewById<TextView>(R.id.temp_actu).text = temp
+                findViewById<TextView>(R.id.wind).text = windSpeed
+                findViewById<TextView>(R.id.pressure).text = pressure
+                findViewById<TextView>(R.id.humidity).text = humidity
+                findViewById<TextView>(R.id.temp_min).text = tempMin
+                findViewById<TextView>(R.id.temp_max).text = tempMax
                 findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
 
                 if (icon.equals("Rain")){
