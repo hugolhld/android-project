@@ -225,13 +225,20 @@ class MainActivity : AppCompatActivity() {
                 val updatedAt:Long = jsonObj.getLong("dt")
                 val updatedAtText = "Updated at: "+ SimpleDateFormat("dd/MM/yyyy HH:mm ", Locale.FRANCE).format(Date(updatedAt*1000))
                 val temp = main.getString("temp").toDouble().toInt().toString() +"°C"
-
+                val tempMin =  main.getString("temp_min")+"°C"
+                val tempMax =  main.getString("temp_max")+"°C"
 
                 val address = jsonObj.getString("name")+", "+sys.getString("country")
 
                 findViewById<TextView>(id.address).text = address
                 findViewById<TextView>(id.updated_at).text =  updatedAtText
                 findViewById<TextView>(id.temp).text = temp
+                findViewById<TextView>(R.id.temp_actu).text = temp
+                findViewById<TextView>(R.id.wind).text = windSpeed
+                findViewById<TextView>(R.id.pressure).text = pressure
+                findViewById<TextView>(R.id.humidity).text = humidity
+                findViewById<TextView>(R.id.temp_min).text = tempMin
+                findViewById<TextView>(R.id.temp_max).text = tempMax
                 findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
 
                 if (icon.equals("Rain")){
@@ -297,6 +304,11 @@ class MainActivity : AppCompatActivity() {
                 val weather = jsonObj.getJSONArray("weather").getJSONObject(0)
                 val weatherDescription = weather.getString("description")
                 val icon = weather.getString("main")
+                val wind = jsonObj.getJSONObject("wind")
+                val pressure = main.getString("pressure")
+                val humidity = main.getString("humidity")
+
+                val windSpeed = wind.getString("speed")
 
 
                 val updatedAt:Long = jsonObj.getLong("dt")
