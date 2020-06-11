@@ -1,5 +1,8 @@
 package com.androdocs.weatherapp
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
@@ -9,9 +12,10 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
 import com.androdocs.weatherapp.R.id
 import com.androdocs.weatherapp.R.layout
+import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 import java.net.URL
@@ -21,12 +25,14 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    private val LOCATION_REQUEST_CODE = 1111
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     val API: String = "167d58d024f7bab696b3bb1dea0260ca"
-    var CITY: String = "Paris"
-    var lon: String = "2.35"
-    var lat: String = "48.85"
+    private lateinit var CITY: String
+    private lateinit var lon: String
+    private lateinit var lat: String
 
-    /*val content: String = search_city.getText().toString()*/
+
 
 
 
@@ -34,20 +40,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(layout.activity_main)
 
-//        val test = "test"
-//
-//        second_hour.text = test
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        weatherHourly().execute()
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-        weatherTask().execute()
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_REQUEST_CODE)
+
+        } else {
+
+            getLocation()
+
+        }
+
 
         button_search.setOnClickListener {
+
             val searchCity: String = search_city.text.toString()
 
             CITY = searchCity
 
-            weatherTask().execute()
+            weatherTaskCity().execute()
             weatherHourly().execute()
 
         }
@@ -73,6 +85,41 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun getLocation() {
+        val locationRequest = LocationRequest()
+        locationRequest.interval = 10000
+        locationRequest.fastestInterval = 5000
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.numUpdates = 1
+
+        fusedLocationClient.requestLocationUpdates(locationRequest, callBack, null)
+    }
+
+    private val callBack = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult?) {
+            locationResult ?: return
+
+            lat = locationResult?.lastLocation?.latitude.toString()
+            lon = locationResult?.lastLocation?.longitude.toString()
+            weatherTask().execute()
+            weatherHourly().execute()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if( requestCode == LOCATION_REQUEST_CODE) {
+            if(permissions.contains(Manifest.permission.ACCESS_FINE_LOCATION) &&
+                grantResults[permissions.indexOf(Manifest.permission.ACCESS_FINE_LOCATION)] == PackageManager.PERMISSION_GRANTED) {
+                getLocation()
+            }
+        }
     }
 
     inner class weatherHourly(): AsyncTask<String, Void, String>(){
@@ -140,8 +187,10 @@ class MainActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: String?): String? {
 
             var response:String?
+
             try{
-                response = URL("https://api.openweathermap.org/data/2.5/weather?q=$CITY&units=metric&appid=$API").readText(
+
+                response = URL("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=$API").readText(
                         Charsets.UTF_8
                 )
             }catch (e: Exception){
@@ -154,6 +203,83 @@ class MainActivity : AppCompatActivity() {
             super.onPostExecute(result)
             try {
                 /* Extracting JSON returns from the API */
+                val jsonObj = JSONObject(result)
+                val main = jsonObj.getJSONObject("main")
+                val sys = jsonObj.getJSONObject("sys")
+                val coord = jsonObj.getJSONObject("coord")
+                lon = coord.getString("lon")
+                lat = coord.getString("lat")
+                val weather = jsonObj.getJSONArray("weather").getJSONObject(0)
+                val weatherDescription = weather.getString("description")
+                val icon = weather.getString("main")
+
+
+                val updatedAt:Long = jsonObj.getLong("dt")
+                val updatedAtText = "Updated at: "+ SimpleDateFormat("dd/MM/yyyy HH:mm ", Locale.FRANCE).format(Date(updatedAt*1000))
+                val temp = main.getString("temp").toDouble().toInt().toString() +"°C"
+
+
+                val address = jsonObj.getString("name")+", "+sys.getString("country")
+
+                findViewById<TextView>(id.address).text = address
+                findViewById<TextView>(id.updated_at).text =  updatedAtText
+                findViewById<TextView>(id.temp).text = temp
+                findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
+
+                if (icon.equals("Rain")){
+                    linearLayout3.setBackgroundResource(R.drawable.rain);
+                    background_layout.setBackgroundResource(R.drawable.background_rain)
+                }
+                else if (icon.equals("Thunderstorm")){
+                    linearLayout3.setBackgroundResource(R.drawable.thunderstorm);
+                    background_layout.setBackgroundResource(R.drawable.background_light)
+
+                }
+                else if (icon.equals("Drizzle")){
+                    linearLayout3.setBackgroundResource(R.drawable.shower_rain);
+                    background_layout.setBackgroundResource(R.drawable.background_rain)
+
+                }
+                else if (icon.equals("Snow")){
+                    linearLayout3.setBackgroundResource(R.drawable.snow)
+                    background_layout.setBackgroundResource(R.drawable.background_snow)
+                }
+                else if (icon.equals("Clear")){
+                    linearLayout3.setBackgroundResource(R.drawable.clearsky);
+                    background_layout.setBackgroundResource(R.drawable.background_sun)
+                }
+                else if (icon.equals("Clouds")){
+                    linearLayout3.setBackgroundResource(R.drawable.brokencloud);
+                    background_layout.setBackgroundResource(R.drawable.background_cloud)
+                }
+
+                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
+
+            } catch (e: Exception) {
+                findViewById<ProgressBar>(id.loader).visibility = View.GONE
+            }
+
+        }
+    }
+
+    inner class weatherTaskCity() : AsyncTask<String, Void, String>() {
+
+        override fun doInBackground(vararg params: String?): String? {
+
+            var response:String?
+            try{
+                response = URL("https://api.openweathermap.org/data/2.5/weather?q=$CITY&units=metric&appid=$API").readText(
+                    Charsets.UTF_8
+                )
+            }catch (e: Exception){
+                response = null
+            }
+            return response
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            try {
                 val jsonObj = JSONObject(result)
                 val main = jsonObj.getJSONObject("main")
                 val sys = jsonObj.getJSONObject("sys")
