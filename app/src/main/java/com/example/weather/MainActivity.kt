@@ -130,8 +130,8 @@ class MainActivity : AppCompatActivity() {
             var response:String?
 
             try {
-                response = URL("https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=minutely&units=metric&appid=$API").readText(
-                    Charsets.UTF_8
+                response = URL("https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=minutely&units=metric&appid=$API")
+                    .readText(Charsets.UTF_8
                 )
 
 
